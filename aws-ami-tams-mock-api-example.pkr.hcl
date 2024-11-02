@@ -8,10 +8,10 @@ packer {
 }
 
 source "amazon-ebs" "rocky8" {
-  ami_name        = "rocky-8-ffmpeg-{{timestamp}}"
-  instance_type   = "t3.medium"
-  region          = "us-west-2"
-  
+  ami_name      = "tams-mock-api-example-ami-{{timestamp}}"
+  instance_type = "t3.large"
+  region        = "us-west-2"
+
   source_ami_filter {
     filters = {
       name                = "Rocky-8-EC2-Base-*"
@@ -21,13 +21,13 @@ source "amazon-ebs" "rocky8" {
     most_recent = true
     owners      = ["679593333241"] # Rocky Linux official owner ID
   }
-  
+
   ssh_username = "rocky"
-  
+
   launch_block_device_mappings {
-    device_name = "/dev/sda1"
-    volume_size = 40
-    volume_type = "gp3"
+    device_name           = "/dev/sda1"
+    volume_size           = 40
+    volume_type           = "gp3"
     delete_on_termination = true
   }
 
@@ -39,7 +39,7 @@ source "amazon-ebs" "rocky8" {
 }
 
 build {
-  name = "rocky-8-ffmpeg"
+  name    = "rocky-8-ffmpeg"
   sources = ["source.amazon-ebs.rocky8"]
 
   provisioner "shell" {
