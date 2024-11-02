@@ -8,8 +8,8 @@ packer {
 }
 
 source "amazon-ebs" "rocky8" {
-  ami_name      = "tams-mock-api-example-ami-{{timestamp}}"
-  instance_type = "t3.large"
+  ami_name      = "tams-mock-api-ami-{{timestamp}}"
+  instance_type = "t3.2xlarge"
   region        = "us-west-2"
 
   source_ami_filter {
@@ -39,10 +39,15 @@ source "amazon-ebs" "rocky8" {
 }
 
 build {
-  name    = "rocky-8-ffmpeg"
+  name    = "tams-mock-api-ami"
   sources = ["source.amazon-ebs.rocky8"]
 
   provisioner "shell" {
+    valid_exit_codes = [
+      "0",
+      "1",
+      "2"
+    ]
     script = "configuration-state.sh"
   }
 }
