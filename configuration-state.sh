@@ -36,10 +36,6 @@ sudo systemctl --now enable docker
 # Add the current user
 sudo usermod -a -G docker $(whoami)
 
-# Install Prism to mock an API
-sudo dnf install nodejs -y
-sudo chown -R $USER /usr/local/lib/node_modules
-sudo npm install -g @stoplight/prism-cli
 
 # Create build directory
 mkdir -p ~/ffmpeg_sources ~/ffmpeg_build ~/bin
@@ -137,6 +133,11 @@ sudo ln -s ~/bin/ffprobe /usr/local/bin/
 
 # Verify installation
 ffmpeg -version
+
+# Install example media files
+git clone https://github.com/bbc/tams.git
+cd tams/examples
+make sample_content
 
 # Setup aliases
 echo 'alias la="ls -alh"' >> ~/.bashrc
