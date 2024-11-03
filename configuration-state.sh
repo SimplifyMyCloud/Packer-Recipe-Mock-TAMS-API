@@ -17,8 +17,10 @@ sudo dnf install -y \
     libtool \
     make \
     pkgconfig \
+    python39 \
     zlib-devel \
-    harfbuzz-devel
+    harfbuzz-devel \
+    vim
 
 # Install Docker and Docker Compose
 sudo dnf config-manager --add-repo https://download.docker.com/linux/rhel/docker-ce.repo
@@ -33,6 +35,11 @@ sudo systemctl --now enable docker
 # Enable non-root user to run Docker commands
 # Add the current user
 sudo usermod -a -G docker $(whoami)
+
+# Install Prism to mock an API
+sudo dnf install nodejs -y
+sudo chown -R $USER /usr/local/lib/node_modules
+sudo npm install -g @stoplight/prism-cli
 
 # Create build directory
 mkdir -p ~/ffmpeg_sources ~/ffmpeg_build ~/bin
@@ -61,14 +68,6 @@ cd ~/ffmpeg_sources
 git clone --branch stable --depth 1 https://code.videolan.org/videolan/x264.git
 cd x264
 PKG_CONFIG_PATH="$HOME/ffmpeg_build/lib/pkgconfig" ./configure --prefix="$HOME/ffmpeg_build" --bindir="$HOME/bin" --enable-static
-make -j$(nproc)
-make install
-
-# Install libx265
-cd ~/ffmpeg_sources
-git clone --branch stable --depth 2 https://bitbucket.org/multicoreware/x265_git
-cd ~/ffmpeg_sources/x265_git/build/linux
-cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$HOME/ffmpeg_build" -DENABLE_SHARED:bool=off ../../source
 make -j$(nproc)
 make install
 
@@ -127,7 +126,6 @@ PATH="$HOME/bin:$PATH" PKG_CONFIG_PATH="$HOME/ffmpeg_build/lib/pkgconfig" ./conf
   --enable-libopus \
   --enable-libvpx \
   --enable-libx264 \
-  --enable-libx265 \
   --enable-nonfree
 make -j$(nproc)
 make install
@@ -139,3 +137,7 @@ sudo ln -s ~/bin/ffprobe /usr/local/bin/
 
 # Verify installation
 ffmpeg -version
+
+# Setup aliases
+echo 'alias la="ls -alh"' >> ~/.bashrc
+echo 'alias ..="cd ../"' >> ~/.bashrc
