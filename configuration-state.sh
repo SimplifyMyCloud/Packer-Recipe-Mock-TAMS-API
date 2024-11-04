@@ -143,3 +143,11 @@ make sample_content
 # Setup aliases
 echo 'alias la="ls -alh"' >> ~/.bashrc
 echo 'alias ..="cd ../"' >> ~/.bashrc
+echo 'alias python="python3"' >> ~/.bashrc
+
+# Setup Python Virtual Environment
+cd ~/tams/examples
+
+mkdir -p venv
+python -m venv venv
+. venv/bin/activate && pip install -r requirements.txt && deactivate
