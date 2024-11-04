@@ -37,7 +37,7 @@ The build script that:
 * Makes FFmpeg available system-wide
 * Added parallel compilation with `-j$(nproc)` for faster builds
 * Installs Python & builds virtual environment
-* Downloads media `Big Buck Bunny` for demo use
+* Downloads media [Big Buck Bunny](https://peach.blender.org/) for demo use
 
 ### RunBooks
 
