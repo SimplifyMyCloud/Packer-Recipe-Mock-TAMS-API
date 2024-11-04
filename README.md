@@ -36,6 +36,8 @@ The build script that:
 * Compiles FFmpeg with all common codecs and features
 * Makes FFmpeg available system-wide
 * Added parallel compilation with `-j$(nproc)` for faster builds
+* Installs Python & builds virtual environment
+* Downloads media `Big Buck Bunny` for demo use
 
 ### RunBooks
 
