@@ -135,6 +135,7 @@ sudo ln -s ~/bin/ffprobe /usr/local/bin/
 ffmpeg -version
 
 # Install example media files
+cd ~
 git clone https://github.com/bbc/tams.git
 cd tams/examples
 make sample_content
